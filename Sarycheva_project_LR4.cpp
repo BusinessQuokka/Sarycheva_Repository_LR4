@@ -4,9 +4,15 @@
 
 using namespace std;
 
-// Прототипы функций, пустые реализации
+// Прототипы функций
 int findNthDigitRightToLeft(int k, int n);
 int findNthDigitLeftToRight(int k, int n);
+int enterNumberK();
+int enterNumberN();
+
+// Глобальные переменные для хранения K и N
+int K = 0;
+int N = 0;
 
 int main() {
   int choice;
@@ -23,30 +29,26 @@ int main() {
 
     switch (choice) {
       case 1:
-        cout << "Выбрано: Ввести натуральное число K. (Функция пока не реализована)" << endl;
-        // TODO: Добавить код для ввода числа K
+        K = enterNumberK();
         break;
       case 2:
-        cout << "Выбрано: Ввести цифру N. (Функция пока не реализована)" << endl;
-        // TODO: Добавить код для ввода цифры N
+        N = enterNumberN();
         break;
       case 3: {
-        int k, n;
-        cout << "Введите натуральное число K: ";
-        cin >> k;
-        cout << "Введите цифру N: ";
-        cin >> n;
-        int result = findNthDigitRightToLeft(k, n);
+        if (K == 0 || N == 0) {
+          cout << "Сначала введите K и N (пункты 1 и 2)." << endl;
+          break;
+        }
+        int result = findNthDigitRightToLeft(K, N);
         cout << "N-я цифра (справа налево): " << result << endl;
         break;
       }
       case 4: {
-        int k, n;
-        cout << "Введите натуральное число K: ";
-        cin >> k;
-        cout << "Введите цифру N: ";
-        cin >> n;
-        int result = findNthDigitLeftToRight(k, n);
+        if (K == 0 || N == 0) {
+          cout << "Сначала введите K и N (пункты 1 и 2)." << endl;
+          break;
+        }
+        int result = findNthDigitLeftToRight(K, N);
         cout << "N-я цифра (слева направо): " << result << endl;
         break;
       }
@@ -61,13 +63,40 @@ int main() {
   return 0;
 }
 
+// Функция для ввода натурального числа K
+int enterNumberK() {
+  int k;
+  cout << "Введите натуральное число K: ";
+  cin >> k;
+  // Можно добавить проверку на натуральность числа (k > 0)
+  if (k <= 0) {
+    cout << "Некорректный ввод. K должно быть натуральным числом." << endl;
+    return 0; // Возвращаем 0, чтобы обозначить ошибку. Можно использовать другое значение, например -1.
+  }
+  return k;
+}
+
+// Функция для ввода цифры N
+int enterNumberN() {
+  int n;
+  cout << "Введите цифру N: ";
+  cin >> n;
+  // Можно добавить проверку на то, что n - целое положительное число
+  if (n <= 0) {
+    cout << "Некорректный ввод. N должно быть натуральным числом." << endl;
+    return 0; // Возвращаем 0, чтобы обозначить ошибку. Можно использовать другое значение, например -1.
+  }
+  return n;
+}
+
+
 // Функция для нахождения N-й цифры справа налево
 int findNthDigitRightToLeft(int k, int n) {
   string numStr = to_string(k);
   if (n > numStr.length()) {
     return -1;
   }
-  return numStr[numStr.length() - n] - '0'; 
+  return numStr[numStr.length() - n] - '0'; // Convert char to int
 }
 
 // Функция для нахождения N-й цифры слева направо
@@ -76,5 +105,5 @@ int findNthDigitLeftToRight(int k, int n) {
   if (n > numStr.length()) {
     return -1;
   }
-  return numStr[n - 1] - '0'; 
+  return numStr[n - 1] - '0'; // Convert char to int
 }
